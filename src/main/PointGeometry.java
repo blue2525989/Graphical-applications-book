@@ -64,8 +64,8 @@ public class PointGeometry {
 		setY(getY() + dy);
 	}
 	
-	public boolean equals(Object obj) {
-		if (obj == PointGeometry.class) {
+	public boolean equals2(Object obj) {
+		if (obj.getClass().isInstance(PointGeometry.this)) {
 			PointGeometry p = (PointGeometry) obj;
 			return (p.getX() == getX() && p.getY() == getY());
 		}

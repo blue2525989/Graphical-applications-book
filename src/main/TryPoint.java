@@ -23,5 +23,8 @@ public class TryPoint {
 		System.out.println("distance: " + p1.distance(p2));
 		p1.translate(p2.getX(), p2.getY());
 		System.out.println("point 1 translated: " + p1);
+		System.out.println(p1.equals2(p1));
+		System.out.println(p1.equals2(p2));
+		System.out.println(p1.equals2(23));
 	}
 }

@@ -150,58 +150,49 @@ public class Recursion {
 	
 	// merge sort
 	public static void msort(int[] a, int lo, int hi) {
-		if (lo == hi) {
-			a[lo] = a[lo];
+		if( lo < hi )
+		{
+			int center = (lo + hi) / 2;
+			msort(a, lo, center);
+			msort(a, center + 1, hi);
+			merge(a, lo, center + 1, hi);
 		}
-		else {
-			int mid = (lo + hi) / 2;
-			msort(a, lo, mid);
-			msort(a, mid+1, hi);
-			merge(a, lo, mid, hi);
-		}
-		/*
-		for (int i = 0; i < a.length; i++) {
-			if (lo < hi) {
-				if (a[lo] > a[lo + 1]) {
-					swap(a, lo, lo + 1);
-					msort(a, lo +1, hi);
-				}
-			}
-		}
-		*/
-	}
-
-	// helper function for msort and sort
-	public static void swap(int[] a, int i, int j) {
-		int temp = a[i];
-		a[i] = a[j];
-		a[j] = temp;
 	}
 	
 	// recursive shell for msort
 	public static void sort(int[] a) {
-		if (a == null) throw new NullPointerException();
-		msort(a, 0, a.length-1);
+		try {
+			msort(a, 0, a.length-1);
+		} catch (NullPointerException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	// merge NOT WORKING PROPERLY
 	public static void merge(int[] a, int lo, int mid, int hi) {
-		int[] b = new int[hi+1];
-		int i = lo, j = mid+1, k = 0;
-		while (i < mid+1 && j < hi+1) {
-			if (a[i] < a[j]) {
-				b[k++] = a[i++];
+		int[] tmp = new int[a.length+1];
+		int left = mid -1;
+		int k = lo;
+		int num = (hi - lo) + 1;
+		
+		while(lo <= left && mid <= num) {
+			if (a[lo] <= a[mid]) {
+				tmp[k++] = a[lo++];
 			}
 			else {
-				b[k++] = a[j++];
+				tmp[k++] = a[mid++];
 			}
 		}
-		if (i == mid+1) {
-			b[k++] = a[j-hi];
+		
+		while(lo <= left) {
+			tmp[k++] = a[lo++];
 		}
-		else {
-			b = Arrays.copyOfRange(a, i, mid);
-			a = Arrays.copyOfRange(b, lo, hi);
+		while(mid <= hi) {
+			tmp[k++] = a[mid++];
+		}
+		
+		for (int i = 0; i < num; i++, hi--) {
+			a[hi] = tmp[hi];
 		}
 	}
 	
